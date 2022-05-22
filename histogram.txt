@@ -1,0 +1,40 @@
+clear
+close
+
+I=imread('Lenna.jpg');
+I=abs(I);
+I=rgb2gray(I);
+subplot(2,3,1);imshow(I);title('Input Gray Images');
+
+[counts bin] =imhist(I)
+subplot(2,3,2);plot(bin,counts);title('Input Image Histogram&#39;);
+
+Ieq =imhistequal(I)
+subplot(2,3,3);imshow(Ieq);title('Equalized Image');
+
+[Ecounts Ebin]=imhist(Ieq)
+subplot(2,3,4);plot(bin,counts);title('Equalized Histogram');
+
+[rowCount colCount]=size(I)
+
+N=rowCount*colCount
+Nk=counts
+
+for i=1:256
+    Comm_Nk(i)=sum(Nk(1:i,1))
+    cdf(i)=Comm_Nk(i)/N
+    Sk(i)=round(cdf(i)*255)
+end
+
+for row=1:rowCount
+    for col=1:colCount
+        pix=I(row,col)
+        pix=double(pix)
+        Inew(row,col)=Sk(pix+1)
+    end
+end
+Inew=uint8(Inew)
+subplot(2,3,5);imshow(Inew);title('Equalized Image : Manual');
+[Ncounts Nbin] =imhist(Inew)
+subplot(2,3,6);plot(Nbin,Ncounts);title('Equalized Image
+Histogram : Manual');

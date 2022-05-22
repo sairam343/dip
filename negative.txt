@@ -1,0 +1,11 @@
+img = imread('sunfloweryash.jpg');
+[m,n,o] = size(img);
+for i=1:m
+    for j=1:n
+        for k=1:o
+            nig(i,j,k) = 255-img(i,j,k);
+        end
+    end
+end
+subplot(2,2,1);imshow(img);title('Original image');
+subplot(2,2,2);imshow(nig);title('negative image');

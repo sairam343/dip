@@ -1,0 +1,17 @@
+clear ;
+close;
+clc;
+I=imread('cameraman.tif')
+subplot(1,2,1);imshow(I);
+title('Input Gray Image');
+Mask=[1 1 1;1 -8 1;1 1 1];
+[m n]=size(I);
+I=double(I)
+for row=2:m-1
+    for col=2:n-1
+        Isub=I(row-1:row+1,col-1:col+1);
+        Iout(row,col)=sum(Isub.*Mask);
+    end
+end
+Iout=mat2gray(Iout);
+subplot(1,2,2);imshow(Iout);title(&#39;Snooth filter output&#39;);

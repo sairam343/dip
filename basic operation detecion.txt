@@ -1,0 +1,130 @@
+                                                                                                         1)Point Detection
+clear ;
+close;
+clc;
+
+I=imread('apple.jpg')
+subplot(2,2,1);imshow(I);title(&#39;Input Image&#39;);
+
+LaplacianX=[0 -1 0;-1 4 -1;0 -1 0];
+
+LaplacianY=[0 -1 0;-1 4 -1;0 -1 0];
+a=rgb2gray(I);
+
+[m n]=size(I);
+I=double(I)
+
+for row=2:m-1
+    for col=2:n-1
+        Isub=I(row-1:row+1,col-1:col+1);
+        Gx(row,col)=sum(Isub.*LaplacianX);
+        Gy(row,col)=sum(Isub.*LaplacianY);
+    end//col
+end//row
+Iout=Gx+Gy;
+Gx=mat2gray(Gx);
+subplot(2,2,2);imshow(Gx);title(&#39;Gx output&#39;);
+
+Gy=mat2gray(Gy);
+subplot(2,2,3);imshow(Gy);title(&#39;Gy output&#39;);
+
+Iout=mat2gray(Iout);
+subplot(2,2,4);imshow(Iout);title('Laplacian point detected
+output');
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			2)Line Detection
+
+clear ;
+close;
+clc;
+
+I=imread(&#39;house.jfif&#39;)
+subplot(2,2,1);imshow(I);title(&#39;Input Image&#39;);
+
+HLineX=[0 -1 0;-1 4 -1;0 -1 0];
+HLineY=[0 -1 0;-1 4 -1;0 -1 0];
+a=rgb2gray(I);
+
+[m n]=size(I);
+I=double(I)
+
+for row=2:m-1
+    for col=2:n-1
+        Isub=I(row-1:row+1,col-1:col+1);
+        Gx(row,col)=sum(Isub.*HLineX);
+        Gy(row,col)=sum(Isub.*HLineY);
+    end
+end
+
+Iout=Gx+Gy;
+
+Gx=mat2gray(Gx);
+subplot(2,2,2);imshow(Gx);title(&#39;Gx output&#39;);
+
+Gy=mat2gray(Gy);
+subplot(2,2,3);imshow(Gy);title(&#39;Gy output&#39;);
+
+Iout=mat2gray(Iout);
+subplot(2,2,4);imshow(Iout);title('Horizontal Line detected
+output');
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+						3)Edge Detection 
+a)using Sobel MAsk
+clear ;
+close;
+clc;
+
+I=imread(&#39;apple.jpg&#39;)
+subplot(2,2,1);imshow(I);title(&#39;Input Image&#39;);
+
+SobelX=[-1 0 1;-2 0 2;-1 0 1];++
+
+SobelY=[-1 -2 -1;0 0 0;1 2 1];
+a=rgb2gray(I);
+
+[m n]=size(I);
+I=double(I)
+
+for row=2:m-1
+    for col=2:n-1
+        Isub=I(row-1:row+1,col-1:col+1);
+        Gx(row,col)=sum(Isub.*SobelX);
+        Gy(row,col)=sum(Isub.*SobelY);
+    end
+end
+Iout=Gx+Gy;
+Gx=mat2gray(Gx);
+subplot(2,2,2);imshow(Gx);title('Gx output');
+
+Gy=mat2gray(Gy);
+subplot(2,2,3);imshow(Gy);title('Gy output');
+Iout=mat2gray(Iout);
+subplot(2,2,4);imshow(Iout);title('Sobel edge detected output');
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+b)Using Prewit Mask
+clear ;
+close;
+clc;
+
+I=imread(&#39;A.bmp&#39;)
+subplot(2,2,1);imshow(I);title(&#39;Input Gray Image&#39;);
+PrewittX=[-1 0 1;-1 0 1;-1 0 1];
+PrewittY=[-1 -1 -1;0 0 0;1 1 1];
+
+[m n]=size(I);
+I=double(I)
+for row=2:m-1
+    for col=2:n-1
+      Isub=I(row-1:row+1,col-1:col+1);
+      Gx(row,col)=sum(Isub.*PrewittX);
+      Gy(row,col)=sum(Isub.*PrewittY);
+    end
+end
+Iout=abs(Gx)+abs(Gy);
+Gx=mat2gray(Gx);
+subplot(2,2,2);imshow(Gx);title('Gx output');
+Gy=mat2gray(Gy);
+subplot(2,2,3);imshow(Gy);title('Gy output');
+Iout=mat2gray(Iout);
+subplot(2,2,4);imshow(Iout);title('Prewitt output');
